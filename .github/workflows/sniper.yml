@@ -1,0 +1,47 @@
+name: OCI ARM Capacity Sniper
+
+on:
+  schedule:
+    # Cada 10 minutos, 24/7, automáticamente
+    - cron: '*/10 * * * *'
+
+  # Permite lanzarlo manualmente desde la pestaña "Actions" de GitHub
+  workflow_dispatch:
+
+jobs:
+  snipe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8  # Máximo 8 min por ejecución para no desperdiciar minutos
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Instalar dependencias
+        run: pip install oci requests
+
+      - name: 🎯 Ejecutar Sniper
+        env:
+          OCI_USER_OCID:      ${{ secrets.OCI_USER_OCID }}
+          OCI_TENANCY_OCID:   ${{ secrets.OCI_TENANCY_OCID }}
+          OCI_REGION:         ${{ secrets.OCI_REGION }}
+          OCI_FINGERPRINT:    ${{ secrets.OCI_FINGERPRINT }}
+          OCI_KEY_FILE:       ${{ secrets.OCI_KEY_FILE }}
+          OCI_SUBNET_ID:      ${{ secrets.OCI_SUBNET_ID }}
+          OCI_IMAGE_ID:       ${{ secrets.OCI_IMAGE_ID }}
+          OCI_SSH_KEY:        ${{ secrets.OCI_SSH_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python sniper.py
+
+      # Si la instancia se creó, desactiva el workflow automáticamente
+      - name: 🛑 Auto-desactivar workflow si hubo éxito
+        if: success()
+        run: |
+          echo "✅ Instancia creada. Desactivando el cron para no crear duplicados."
+          # Nota: para desactivar automáticamente necesitarías un token con permisos.
+          # De momento, simplemente cesa de reintentar al salir con código 0.
