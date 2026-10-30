@@ -39,9 +39,5 @@ jobs:
         run: python sniper.py
 
       # Si la instancia se creó, desactiva el workflow automáticamente
-      - name: 🛑 Auto-desactivar workflow si hubo éxito
-        if: success()
-        run: |
-          echo "✅ Instancia creada. Desactivando el cron para no crear duplicados."
-          # Nota: para desactivar automáticamente necesitarías un token con permisos.
-          # De momento, simplemente cesa de reintentar al salir con código 0.
+      - name: 🏁 Fin de ciclo
+        run: echo "Ciclo de sniper completado."
