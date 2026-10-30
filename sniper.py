@@ -37,7 +37,7 @@ def main():
     start_time = time.time()
     
     # 8.5 minutos de bucle constante (dejamos 90s de margen para que el runner de GitHub no colapse)
-    max_duration = 510 
+    max_duration = 480 
     total_attempts = 0
 
     print(f"[*] Iniciando cacería ininterrumpida en la nube (Duración: 8.5 min)...")
@@ -86,8 +86,8 @@ def main():
                 # Pausa breve igual que en local
                 time.sleep(15)
 
-    print("\n[·] Tiempo de ronda agotado. Saliendo limpiamente (código 1) para dar paso al siguiente cron.")
-    sys.exit(1)
+    print("\n[·] Tiempo de ronda agotado. Saliendo limpiamente para el siguiente cron.")
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
