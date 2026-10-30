@@ -11,7 +11,7 @@ on:
 jobs:
   snipe:
     runs-on: ubuntu-latest
-    timeout-minutes: 8  # Máximo 8 min por ejecución para no desperdiciar minutos
+    timeout-minutes: 10  # Máximo 10 min por ejecución para no desperdiciar minutos
 
     steps:
       - name: 📥 Checkout
