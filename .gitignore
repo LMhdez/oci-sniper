@@ -1,0 +1,6 @@
+*.log
+*.json
+__pycache__/
+*.pyc
+setup_network.py
+subnet_id.txt
