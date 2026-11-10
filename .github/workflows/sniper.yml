@@ -1,11 +1,7 @@
 name: OCI ARM Capacity Sniper
 
 on:
-  schedule:
-    # Cada 10 minutos, 24/7, automáticamente
-    - cron: '*/10 * * * *'
-
-  # Permite lanzarlo manualmente desde la pestaña "Actions" de GitHub
+  # Solo permite lanzarlo manualmente desde la pestaña "Actions" de GitHub
   workflow_dispatch:
 
 jobs:
